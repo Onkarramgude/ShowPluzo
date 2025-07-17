@@ -1,13 +1,353 @@
+/* ======= Global Styles ======= */
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: 'Poppins', sans-serif;
+  background-color: #f5f7fa;
+  color: #333;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.alert {
+  border-radius: 0.5rem;
+  font-size: 0.95rem;
+  padding: 1rem 1.5rem;
+}
+
+/* ======= Seat Grid ======= */
+.seat-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 1rem auto;
+  max-width: 500px;
+}
+
+.seat-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.seat {
+  width: 40px;
+  height: 40px;
+  border: 2px solid #28a745;
+  text-align: center;
+  line-height: 38px;
+  margin: 3px;
+  cursor: pointer;
+  border-radius: 6px;
+  font-weight: bold;
+  color: #28a745;
+  background-color: #fff;
+  transition: all 0.2s ease-in-out;
+}
+
+.seat:hover {
+  background-color: #e6ffe6;
+}
+
+.seat.selected {
+  background-color: #fd7e14;
+  color: white;
+  border-color: #fd7e14;
+}
+
+.seat.booked {
+  background-color: #dee2e6;
+  color: #6c757d;
+  border-color: #adb5bd;
+  cursor: not-allowed;
+}
+
+.seat.disabled {
+  background-color: #f8f9fa;
+  color: #adb5bd;
+  pointer-events: none;
+  border-color: #ced4da;
+}
+
+.seat-row-label {
+  width: 30px;
+  text-align: center;
+  font-weight: 600;
+  color: #495057;
+  margin-right: 4px;
+}
+
+.seat-column-labels {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+  gap: 3px;
+}
+
+.seat-column-label {
+  width: 40px;
+  text-align: center;
+  font-weight: 600;
+  color: #495057;
+}
+
+/* ======= Admin Add Movie Page ======= */
+.admin-add-movie-container {
+  max-width: 900px;
+  margin: auto;
+}
+
+.admin-add-movie-card {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+}
+
+.admin-add-movie-container h2 {
+  font-weight: 600;
+  color: #333;
+}
+
+.admin-add-movie-container .form-label {
+  font-weight: 500;
+  color: #444;
+}
+
+.admin-add-movie-container input,
+.admin-add-movie-container textarea,
+.admin-add-movie-container select {
+  border-radius: 0.5rem !important;
+  transition: border-color 0.2s;
+}
+
+.admin-add-movie-container input:focus,
+.admin-add-movie-container textarea:focus,
+.admin-add-movie-container select:focus {
+  border-color: #007bff;
+  box-shadow: none;
+}
+
+.admin-add-movie-container .btn {
+  transition: all 0.2s ease-in-out;
+  font-weight: 500;
+}
+
+.admin-add-movie-container .btn-outline-secondary:hover,
+.admin-add-movie-container .btn-success:hover {
+  transform: scale(1.03);
+}
+
+.admin-add-movie-container .badge {
+  font-size: 0.85rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: default;
+}
+
+.admin-add-movie-container .badge span {
+  cursor: pointer;
+  margin-left: 0.3rem;
+  font-weight: bold;
+}
+
+.admin-add-movie-container .badge span:hover {
+  color: red;
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .admin-add-movie-container .row > div {
+    margin-bottom: 1rem;
+  }
+
+  .admin-add-movie-container .btn {
+    width: 100%;
+  }
+
+  .admin-add-movie-card {
+    padding: 1.2rem;
+  }
+
+  .seat {
+    width: 30px;
+    height: 30px;
+    font-size: 12px;
+    line-height: 30px;
+  }
+
+  .seat-column-label,
+  .seat-row-label {
+    font-size: 0.85rem;
+  }
+}
+
+/* ======= Admin Users Page / Movie Table ======= */
+.admin-users-container {
+  max-width: 1000px;
+  margin: auto;
+  padding-bottom: 2rem;
+}
+
+.admin-users-container h2 {
+  font-weight: 600;
+  color: #333;
+}
+
+.admin-users-container .table {
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 1rem;
+}
+
+.admin-users-container .table th,
+.admin-users-container .table td {
+  vertical-align: middle;
+  text-align: center;
+  font-size: 1rem;
+  padding: 0.75rem;
+}
+
+.admin-users-container .table th {
+  background-color: #212529;
+  color: #fff;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.admin-users-container .table-striped tbody tr:nth-of-type(odd) {
+  background-color: #f8f9fa;
+}
+
+.admin-users-container .table-bordered {
+  border: 1px solid #dee2e6;
+}
+
+.admin-users-container .table-hover tbody tr:hover {
+  background-color: #e9ecef;
+  transition: background-color 0.2s ease;
+}
+
+.spinner-border {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.hover-scale:hover {
+  transform: scale(1.02);
+  transition: transform 0.2s ease-in-out;
+}
+
+.seat-btn {
+  width: 36px;
+  height: 36px;
+  font-size: 0.75rem;
+  line-height: 1;
+}
+
+.movie-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 1rem;
+}
+
+.movie-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+}
+
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: scale(1.01);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.07);
+}
+
+body {
+  background: linear-gradient(to right, #f8f9fa, #e0f7fa);
+}
+
+.home-movie-img {
+  height: 350px;
+  object-fit: cover;
+  border-radius: 12px 12px 0 0;
+}
+
+@media (max-width: 576px) {
+  .home-movie-img {
+    height: 250px;
+  }
+}
+
+.popover {
+  min-width: 220px;
+  padding: 0 !important;
+  border-radius: 16px !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2) !important;
+  border: none !important;
+}
+
+.list-group-item {
+  background-color: transparent;
+  padding: 0;
+  border: none;
+}
+
+.list-group-item button {
+  font-weight: 500;
+  font-size: 15px;
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 10px;
+  text-align: left;
+  transition: all 0.2s ease-in-out;
+  background-color: transparent;
+}
+
+.list-group-item button:hover {
+  background: #f1f1f1;
+  color: #000;
+  transform: translateX(4px);
+}
+
+.list-group-item:last-child button:hover {
+  background-color: #ffe5e5;
+  color: #dc3545;
+}
+
+.btn-outline-light {
+  background-color: #212529;
+  border-color: #fff;
+  color: #fff;
+}
+
+.btn-outline-light:hover {
+  background-color: #fff;
+  color: #212529;
+  transition: all 0.3s ease-in-out;
+}
+
+.list-group-item button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ffc107;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Custom Ticket Shape */
+.custom-ticket {
+  clip-path: polygon(0 0, 100% 0%, 100% 80%, 90% 100%, 0 100%);
+  font-size: 1.2rem;
+  line-height: 1.2;
+  transition: transform 0.2s ease-in-out;
+}
+
+.custom-ticket:hover {
+  transform: scale(1.05);
+}
+
+/* ✅ FIX for SVG width/height error */
+svg {
+  width: 1em !important;
+  height: 1em !important;
 }
