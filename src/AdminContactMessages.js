@@ -9,7 +9,6 @@ function AdminContactMessages() {
   const fetchMessages = async () => {
     try {
       const res = await axios.get("http://localhost:8080/api/movies/contact/messages");
-
       setMessages(res.data);
     } catch (err) {
       console.error("Error fetching messages", err);
@@ -21,7 +20,7 @@ function AdminContactMessages() {
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this message?")) return;
     try {
-     await axios.delete(`http://localhost:8080/api/movies/contact/delete/${id}`);
+      await axios.delete(`http://localhost:8080/api/movies/contact/delete/${id}`);
       setMessages((prev) => prev.filter((msg) => msg.id !== id));
       alert("✅ Message deleted successfully.");
     } catch (err) {
@@ -50,7 +49,7 @@ function AdminContactMessages() {
                 <th>Name</th>
                 <th>Email</th>
                 <th>Message</th>
-                <th>Action</th> {/* 🔥 New column for delete */}
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
