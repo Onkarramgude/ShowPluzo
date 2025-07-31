@@ -40,9 +40,17 @@ function Navbar({ onSearch }) {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow sticky-top">
       <div className="container-fluid px-4">
-        <Link className="navbar-brand fw-bold fs-3 text-danger" to="/">
-          🎬 Show<span className="text-warning">.Pluzo</span>
-        </Link>
+       <Link className="navbar-brand d-flex align-items-center gap-2" to="/">
+  <img
+    src="/ShowPluzo.png" // Or replace with your actual file name
+    alt="Show.Pluzo Logo"
+    style={{ height: "40px", width: "auto" }}
+  />
+  <span className="fw-bold fs-4 text-danger">
+    Show<span className="text-warning">.Pluzo</span>
+  </span>
+</Link>
+
 
         <button
           className="navbar-toggler"
