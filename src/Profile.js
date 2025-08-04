@@ -1,15 +1,44 @@
 import React from "react";
+import axios from "axios";
 import { useAuth } from "./AuthContext";
+import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {
   FaUserCircle,
   FaEnvelope,
   FaIdBadge,
   FaSignOutAlt,
+  FaTrash,
 } from "react-icons/fa";
 
 function Profile() {
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleDeleteAccount = async () => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to permanently delete your account?"
+    );
+    if (!confirmDelete) return;
+
+    try {
+      const response = await axios.delete(
+        `http://localhost:8080/auth/delete/${user.email}`,
+        { withCredentials: true }
+      );
+
+      alert(response.data || "Your account has been deleted.");
+      logout();
+      navigate("/");
+    } catch (error) {
+      console.error("❌ Error deleting account", error);
+      if (error.response && error.response.data) {
+        alert(`Error: ${error.response.data}`);
+      } else {
+        alert("Something went wrong. Account not deleted.");
+      }
+    }
+  };
 
   if (!user) {
     return (
@@ -24,7 +53,7 @@ function Profile() {
   return (
     <div className="container mt-5 mb-5">
       <div
-        className="card shadow-lg p-4 mx-auto rounded-4 bg-light animate__animated animate__fadeIn"
+        className="card shadow-lg p-4 mx-auto rounded-4 bg-light"
         style={{ maxWidth: "500px" }}
       >
         <div className="text-center mb-4">
@@ -58,13 +87,21 @@ function Profile() {
           </li>
         </ul>
 
-        <div className="text-center mt-4">
+        <div className="text-center mt-4 d-flex flex-column gap-2">
           <button
             className="btn btn-outline-danger rounded-pill px-4 py-2"
             onClick={logout}
           >
             <FaSignOutAlt className="me-2" />
             Logout
+          </button>
+
+          <button
+            className="btn btn-danger rounded-pill px-4 py-2"
+            onClick={handleDeleteAccount}
+          >
+            <FaTrash className="me-2" />
+            Delete My Account
           </button>
         </div>
       </div>

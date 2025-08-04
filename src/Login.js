@@ -28,19 +28,19 @@ function Login() {
       const res = await axios.post("http://localhost:8080/auth/login", formData, {
         withCredentials: true,
       });
+     const user = res.data?.user;
 
-      const user = res.data?.user;
+if (user && user.role) {
+  login(user);
+  if (user.role === "ADMIN") {
+    navigate("/admin/dashboard");
+  } else {
+    navigate("/userdashboard");
+  }
+} else {
+  setMessage("❌ Invalid response from server.");
+}
 
-      if (user && user.role) {
-        login(user);
-        if (user.role === "ADMIN") {
-          navigate("/admin/dashboard");
-        } else {
-          navigate("/userdashboard");
-        }
-      } else {
-        setMessage("❌ Invalid response from server.");
-      }
     } catch (err) {
       console.error("Login error:", err);
       setMessage(err.response?.data?.message || "❌ Login failed. Please try again.");
@@ -108,7 +108,9 @@ function Login() {
             className="btn btn-primary w-100 d-flex align-items-center justify-content-center"
             disabled={loading}
           >
-            {loading && <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>}
+            {loading && (
+              <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+            )}
             {loading ? "Logging in..." : "➡️ Login"}
           </button>
         </form>
