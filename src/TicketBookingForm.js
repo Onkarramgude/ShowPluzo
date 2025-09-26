@@ -143,7 +143,7 @@ function TicketBookingForm() {
 
     try {
       const options = {
-        key: "rzp_test_RxOrwvkBb4ULAS",
+        key: "rzp_test_RM7QiQWWO1vZPx",
         amount: totalPrice * 100,
         currency: "INR",
         name: "Pluzo Movie Booking",

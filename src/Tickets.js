@@ -1,4 +1,4 @@
-// ✅ Updated Tickets.js with Active & History Separation
+// 🎟 BookMyShow-style Tickets Page (Bootstrap only)
 import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { useAuth } from "./AuthContext";
@@ -98,46 +98,44 @@ function Tickets() {
   };
 
   const now = new Date();
-  const activeTickets = tickets.filter((t) =>
-    t.status !== "cancelled" && new Date(t.showTime) > now
+  const activeTickets = tickets.filter(
+    (t) => t.status !== "cancelled" && new Date(t.showTime) > now
   );
-  const historyTickets = tickets.filter((t) =>
-    t.status !== "cancelled" && new Date(t.showTime) <= now
+  const historyTickets = tickets.filter(
+    (t) => t.status !== "cancelled" && new Date(t.showTime) <= now
   );
   const cancelledTickets = tickets.filter((t) => t.status === "cancelled");
 
+  // 🎟 Styled Ticket Card
   const renderTicketCard = (ticket) => {
     const isCancelled = ticket.status === "cancelled";
-    const isJustBooked = ticket.paymentId === justBookedPaymentId && justBookedVisible;
-
-    const cardClass = `card h-100 border-0 rounded-4 shadow-sm p-3 ${
-      isCancelled
-        ? "bg-light text-muted border border-danger"
-        : isJustBooked
-        ? "border border-success border-3 bg-white"
-        : ""
-    }`;
+    const isJustBooked =
+      ticket.paymentId === justBookedPaymentId && justBookedVisible;
 
     return (
       <div className="col" key={ticket.id}>
-        <div className={cardClass}>
+        <div
+          className={`card h-100 border-0 shadow-lg rounded-4 overflow-hidden ${
+            isCancelled
+              ? "bg-light text-muted border border-danger"
+              : isJustBooked
+              ? "border border-success border-3"
+              : ""
+          }`}
+        >
+          <div className="card-header bg-danger text-white fw-bold d-flex justify-content-between">
+            <span>🎬 {ticket.movieName || "Untitled Movie"}</span>
+            <span className="badge bg-light text-dark">
+              {ticket.seatType || "Seat"}
+            </span>
+          </div>
           <div className="card-body">
-            <h5
-              className={`card-title fw-bold mb-3 ${
-                isCancelled
-                  ? "text-danger text-decoration-line-through"
-                  : "text-success"
-              }`}
-            >
-              🎬 {ticket.movieName || "Untitled Movie"}
-            </h5>
-
-            <p className="mb-1">
+            <p className="mb-2">
               <FaTheaterMasks className="me-2 text-secondary" />
               <strong>Theater:</strong> {ticket.theaterLocation || "N/A"}
             </p>
 
-            <p className="mb-1">
+            <p className="mb-2">
               <FaClock className="me-2 text-secondary" />
               <strong>Show Time:</strong>{" "}
               {ticket.showTime
@@ -148,18 +146,26 @@ function Tickets() {
                 : "N/A"}
             </p>
 
-            <p className="mb-1">
+            <p className="mb-2">
               <FaChair className="me-2 text-secondary" />
               <strong>Seats:</strong>{" "}
-              <span className={`badge ${isCancelled ? "bg-secondary" : "bg-primary"}`}>
-                {ticket.seatCount || 0} ({ticket.seatType || "N/A"})
+              <span
+                className={`badge ${
+                  isCancelled ? "bg-secondary" : "bg-primary"
+                }`}
+              >
+                {ticket.seatCount || 0}
               </span>
             </p>
 
-            <p className="mb-1">
+            <p className="mb-2">
               <strong>Seat Numbers:</strong>{" "}
               {ticket.selectedSeats?.length ? (
-                <span className={`badge ${isCancelled ? "bg-secondary" : "bg-success"}`}>
+                <span
+                  className={`badge ${
+                    isCancelled ? "bg-secondary" : "bg-success"
+                  }`}
+                >
                   {renderSeatNumbers(ticket.selectedSeats)}
                 </span>
               ) : (
@@ -167,15 +173,18 @@ function Tickets() {
               )}
             </p>
 
-            <p className="mb-1">
+            <p className="mb-2">
               <FaRupeeSign className="me-2 text-secondary" />
               <strong>Total Price:</strong>{" "}
-              ₹<span className={isCancelled ? "text-decoration-line-through" : ""}>
+              ₹
+              <span
+                className={isCancelled ? "text-decoration-line-through" : ""}
+              >
                 {ticket.totalPrice || 0}
               </span>
             </p>
 
-            <p className="small mb-2">
+            <p className="small text-muted">
               <strong>Payment ID:</strong> {ticket.paymentId || "N/A"}
             </p>
 
@@ -190,7 +199,7 @@ function Tickets() {
             ) : (
               <>
                 <button
-                  className="btn btn-outline-danger btn-sm mt-2"
+                  className="btn btn-outline-danger btn-sm mt-3 rounded-pill"
                   onClick={() => cancelTicket(ticket.id)}
                 >
                   <FaTrash className="me-1" /> Cancel Ticket
@@ -207,10 +216,10 @@ function Tickets() {
   };
 
   return (
-    <div className="container mt-5">
-      <h2 className="text-primary mb-4 d-flex align-items-center">
+    <div className="container mt-5 mb-5">
+      <h2 className="text-danger fw-bold mb-4 d-flex align-items-center">
         <FaTicketAlt className="me-2" />
-        Your Booked Tickets
+        My Tickets
       </h2>
 
       {message && <div className="alert alert-success">{message}</div>}
@@ -226,8 +235,8 @@ function Tickets() {
         <>
           {activeTickets.length > 0 && (
             <>
-              <h4 className="text-success mt-4">🎟 Active Tickets</h4>
-              <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-5">
+              <h4 className="text-success mt-4 mb-3">🎟 Active Tickets</h4>
+              <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
                 {activeTickets.map(renderTicketCard)}
               </div>
             </>
@@ -235,8 +244,8 @@ function Tickets() {
 
           {historyTickets.length > 0 && (
             <>
-              <h4 className="text-secondary mt-4">📜 Ticket History</h4>
-              <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-5">
+              <h4 className="text-secondary mt-5 mb-3">📜 Ticket History</h4>
+              <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
                 {historyTickets.map(renderTicketCard)}
               </div>
             </>
@@ -244,7 +253,7 @@ function Tickets() {
 
           {cancelledTickets.length > 0 && (
             <>
-              <h4 className="text-danger mt-4">❌ Cancelled Tickets</h4>
+              <h4 className="text-danger mt-5 mb-3">❌ Cancelled Tickets</h4>
               <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
                 {cancelledTickets.map(renderTicketCard)}
               </div>

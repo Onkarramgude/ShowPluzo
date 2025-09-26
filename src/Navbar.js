@@ -38,70 +38,63 @@ function Navbar({ onSearch }) {
   const hideSearch = location.pathname === "/book-ticket";
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow sticky-top">
-      <div className="container-fluid px-4">
-       <Link className="navbar-brand d-flex align-items-center gap-2" to="/">
-  <img
-    src="/ShowPluzo.png" // Or replace with your actual file name
-    alt="Show.Pluzo Logo"
-    style={{ height: "40px", width: "auto" }}
-  />
-  <span className="fw-bold fs-4 text-danger">
-    Show<span className="text-warning">.Pluzo</span>
-  </span>
-</Link>
+    <>
+      {/* Top Navbar */}
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm sticky-top">
+        <div className="container-fluid px-4">
+          {/* Brand / Logo */}
+          <Link
+            className="navbar-brand d-flex align-items-center gap-2"
+            to="/"
+          >
+            <img
+              src="/ShowPluzo.png"
+              alt="Show.Pluzo Logo"
+              style={{ height: "40px", width: "auto" }}
+            />
+            <span className="fw-bold fs-4 text-danger">
+              Show<span className="text-warning">.Pluzo</span>
+            </span>
+          </Link>
 
+          {/* Toggler */}
+          <button
+            className="navbar-toggler"
+            type="button"
+            onClick={toggleNavbar}
+            aria-controls="navbarNav"
+            aria-expanded={!isNavCollapsed}
+            aria-label="Toggle navigation"
+          >
+            <span className="navbar-toggler-icon" />
+          </button>
 
-        <button
-          className="navbar-toggler"
-          type="button"
-          onClick={toggleNavbar}
-          aria-controls="navbarNav"
-          aria-expanded={!isNavCollapsed}
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon" />
-        </button>
-
-        <div
-          className={`collapse navbar-collapse ${
-            !isNavCollapsed ? "show" : ""
-          }`}
-          id="navbarNav"
-        >
-          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            <li className="nav-item">
-              <Link className="nav-link fw-semibold" to="/">
-                🏠 Home
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link fw-semibold" to="/movies">
-                🎞️ Movies
-              </Link>
-            </li>
-          </ul>
-
-          <div className="d-flex align-items-center gap-3">
+          {/* Collapse */}
+          <div
+            className={`collapse navbar-collapse ${
+              !isNavCollapsed ? "show" : ""
+            }`}
+            id="navbarNav"
+          >
+            {/* Search in center (BookMyShow style) */}
             {!hideSearch && (
-              <div className="position-relative d-none d-md-block">
-                <div className="input-group input-group-sm">
-                  <SearchBar onSearch={onSearch} />
-                </div>
+              <div className="mx-auto my-2 my-lg-0" style={{ width: "40%" }}>
+                <SearchBar onSearch={onSearch} />
               </div>
             )}
 
-            <ul className="navbar-nav align-items-center mb-0">
+            {/* Right side */}
+            <ul className="navbar-nav ms-auto align-items-center mb-0">
               {!user ? (
                 <>
-                  <li className="nav-item">
-                    <Link className="nav-link fw-semibold" to="/login">
-                      🔐 Login
+                  <li className="nav-item me-2">
+                    <Link className="btn btn-outline-light" to="/login">
+                      Login
                     </Link>
                   </li>
                   <li className="nav-item">
-                    <Link className="nav-link fw-semibold" to="/register">
-                      📝 Register
+                    <Link className="btn btn-danger" to="/register">
+                      Register
                     </Link>
                   </li>
                 </>
@@ -113,8 +106,8 @@ function Navbar({ onSearch }) {
                 >
                   <button
                     ref={target}
-                    className="btn btn-outline-light rounded-circle d-flex align-items-center justify-content-center"
-                    style={{ width: "42px", height: "42px", fontWeight: "bold" }}
+                    className="btn btn-light rounded-circle d-flex align-items-center justify-content-center fw-bold text-dark"
+                    style={{ width: "42px", height: "42px" }}
                   >
                     {getInitials(user.username)}
                   </button>
@@ -157,7 +150,9 @@ function Navbar({ onSearch }) {
                               <li className="list-group-item bg-dark text-light">
                                 <button
                                   className="btn w-100 text-start text-light"
-                                  onClick={() => handleNavigate("/admin/contact-messages")}
+                                  onClick={() =>
+                                    handleNavigate("/admin/contact-messages")
+                                  }
                                 >
                                   📥 Contact Messages
                                 </button>
@@ -165,7 +160,9 @@ function Navbar({ onSearch }) {
                               <li className="list-group-item bg-dark text-light">
                                 <button
                                   className="btn w-100 text-start text-light"
-                                  onClick={() => handleNavigate("/admin/add-movie")}
+                                  onClick={() =>
+                                    handleNavigate("/admin/add-movie")
+                                  }
                                 >
                                   ➕ Add Movie
                                 </button>
@@ -173,7 +170,9 @@ function Navbar({ onSearch }) {
                               <li className="list-group-item bg-dark text-light">
                                 <button
                                   className="btn w-100 text-start text-light"
-                                  onClick={() => handleNavigate("/admin/add-theater")}
+                                  onClick={() =>
+                                    handleNavigate("/admin/add-theater")
+                                  }
                                 >
                                   🏢 Add Theater
                                 </button>
@@ -214,8 +213,29 @@ function Navbar({ onSearch }) {
             </ul>
           </div>
         </div>
+      </nav>
+
+      {/* Secondary Navbar (like BookMyShow categories) */}
+      <div className="bg-light border-bottom">
+        <div className="container d-flex flex-wrap justify-content-center py-2">
+          <Link className="nav-link px-3 fw-semibold text-dark" to="/movies">
+            Movies
+          </Link>
+          <Link className="nav-link px-3 fw-semibold text-dark" to="/events">
+            Events
+          </Link>
+          <Link className="nav-link px-3 fw-semibold text-dark" to="/plays">
+            Plays
+          </Link>
+          <Link className="nav-link px-3 fw-semibold text-dark" to="/sports">
+            Sports
+          </Link>
+          <Link className="nav-link px-3 fw-semibold text-dark" to="/activities">
+            Activities
+          </Link>
+        </div>
       </div>
-    </nav>
+    </>
   );
 }
 

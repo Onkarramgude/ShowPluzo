@@ -351,3 +351,18 @@ svg {
   width: 1em !important;
   height: 1em !important;
 }
+/* Classic card styling */
+.classic-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.classic-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Movie image */
+.home-movie-img {
+  border-top-left-radius: 0.75rem !important;
+  border-top-right-radius: 0.75rem !important;
+}

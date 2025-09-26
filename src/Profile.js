@@ -52,57 +52,76 @@ function Profile() {
 
   return (
     <div className="container mt-5 mb-5">
+      {/* BookMyShow style header */}
+      <div className="text-center mb-4">
+        <h2 className="fw-bold text-danger">🎟️ My Profile</h2>
+        <p className="text-muted">Manage your account & bookings</p>
+      </div>
+
       <div
-        className="card shadow-lg p-4 mx-auto rounded-4 bg-light"
-        style={{ maxWidth: "500px" }}
+        className="card border-0 shadow-lg mx-auto rounded-4"
+        style={{
+          maxWidth: "650px",
+          background:
+            "linear-gradient(135deg, #ffffff, #f9f9f9, #f1f1f1)",
+        }}
       >
-        <div className="text-center mb-4">
-          <FaUserCircle className="text-primary" size={72} />
-          <h3 className="mt-2 fw-bold">User Profile</h3>
-          <span className="badge bg-success">
-            {user.role?.toUpperCase() || "USER"}
-          </span>
-        </div>
-
-        <hr />
-
-        <ul className="list-group list-group-flush mb-3">
-          <li className="list-group-item bg-light d-flex align-items-center">
-            <FaIdBadge className="me-2 text-secondary" />
-            <span>
-              <strong>User ID:</strong> {user.id || "N/A"}
+        <div className="card-body p-5">
+          {/* Profile Header */}
+          <div className="text-center mb-4">
+            <FaUserCircle className="text-danger" size={90} />
+            <h3 className="mt-3 fw-bold text-dark">{user.username}</h3>
+            <span className="badge bg-danger px-3 py-2 rounded-pill">
+              {user.role?.toUpperCase() || "USER"}
             </span>
-          </li>
-          <li className="list-group-item bg-light d-flex align-items-center">
-            <FaUserCircle className="me-2 text-secondary" />
-            <span>
-              <strong>Username:</strong> {user.username || "N/A"}
-            </span>
-          </li>
-          <li className="list-group-item bg-light d-flex align-items-center">
-            <FaEnvelope className="me-2 text-secondary" />
-            <span>
-              <strong>Email:</strong> {user.email || "N/A"}
-            </span>
-          </li>
-        </ul>
+          </div>
 
-        <div className="text-center mt-4 d-flex flex-column gap-2">
-          <button
-            className="btn btn-outline-danger rounded-pill px-4 py-2"
-            onClick={logout}
-          >
-            <FaSignOutAlt className="me-2" />
-            Logout
-          </button>
+          {/* Profile Info */}
+          <div className="row g-3">
+            <div className="col-md-12">
+              <div className="p-3 rounded bg-light d-flex align-items-center">
+                <FaIdBadge className="me-3 text-secondary" />
+                <span>
+                  <strong>User ID:</strong> {user.id || "N/A"}
+                </span>
+              </div>
+            </div>
+            <div className="col-md-12">
+              <div className="p-3 rounded bg-light d-flex align-items-center">
+                <FaUserCircle className="me-3 text-secondary" />
+                <span>
+                  <strong>Username:</strong> {user.username || "N/A"}
+                </span>
+              </div>
+            </div>
+            <div className="col-md-12">
+              <div className="p-3 rounded bg-light d-flex align-items-center">
+                <FaEnvelope className="me-3 text-secondary" />
+                <span>
+                  <strong>Email:</strong> {user.email || "N/A"}
+                </span>
+              </div>
+            </div>
+          </div>
 
-          <button
-            className="btn btn-danger rounded-pill px-4 py-2"
-            onClick={handleDeleteAccount}
-          >
-            <FaTrash className="me-2" />
-            Delete My Account
-          </button>
+          {/* Action Buttons */}
+          <div className="text-center mt-5 d-flex flex-column gap-3">
+            <button
+              className="btn btn-outline-danger rounded-pill px-4 py-2 fw-semibold"
+              onClick={logout}
+            >
+              <FaSignOutAlt className="me-2" />
+              Logout
+            </button>
+
+            <button
+              className="btn btn-danger rounded-pill px-4 py-2 fw-semibold"
+              onClick={handleDeleteAccount}
+            >
+              <FaTrash className="me-2" />
+              Delete My Account
+            </button>
+          </div>
         </div>
       </div>
     </div>

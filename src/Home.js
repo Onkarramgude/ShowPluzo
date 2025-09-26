@@ -41,23 +41,25 @@ function Home({ searchTerm = "" }) {
   };
 
   return (
-    <div className="bg-light py-3">
+    <div className="bg-light py-4">
       <div className="container">
         {user && (
-          <div className="bg-white p-4 rounded shadow-sm border mb-4">
-            <h5 className="mb-1">
+          <div className="bg-white p-4 rounded-3 shadow-sm border mb-4">
+            <h5 className="mb-1 fw-semibold text-dark">
               👋 Welcome, <span className="text-primary">{user.username}</span>
             </h5>
             <small className="text-muted">📧 {user.email}</small>
           </div>
         )}
 
-        <div className="d-flex justify-content-between align-items-center mb-4">
-          <h3 className="text-danger fw-bold mb-0">🎬 Now Showing</h3>
+        <div className="d-flex justify-content-between align-items-center mb-4 border-bottom pb-2">
+          <h3 className="text-dark fw-bold mb-0">
+            🎬 Now Showing
+          </h3>
           <div className="d-flex align-items-center gap-2">
-            <label className="fw-semibold">🎭 Filter by Genre:</label>
+            <label className="fw-semibold text-dark">🎭 Genre:</label>
             <select
-              className="form-select"
+              className="form-select form-select-sm border-dark"
               style={{ maxWidth: "200px" }}
               value={selectedGenre}
               onChange={(e) => setSelectedGenre(e.target.value)}
@@ -72,7 +74,7 @@ function Home({ searchTerm = "" }) {
         </div>
 
         {loading ? (
-          <div className="text-center py-4 fs-5">⏳ Loading movies...</div>
+          <div className="text-center py-5 fs-5 text-secondary">⏳ Loading movies...</div>
         ) : error ? (
           <div className="alert alert-danger text-center">{error}</div>
         ) : filteredMovies.length === 0 ? (
@@ -88,16 +90,15 @@ function Home({ searchTerm = "" }) {
                 onClick={() => handleClick(movie)}
                 style={{ cursor: "pointer" }}
               >
-                <div className="card border-0 shadow-sm h-100 rounded-4">
+                <div className="card border shadow h-100 rounded-3 classic-card">
                   <img
                     src={movie.posterUrl || "/default-poster.jpg"}
                     alt={movie.title}
-                    className="card-img-top rounded-top-4 home-movie-img"
+                    className="card-img-top rounded-top-3 home-movie-img"
                     style={{
-                      height: "350px",
+                      height: "320px",
                       objectFit: "cover",
-                      borderTopLeftRadius: "1rem",
-                      borderTopRightRadius: "1rem",
+                      borderBottom: "2px solid #ddd",
                     }}
                     onError={(e) => {
                       e.target.onerror = null;
@@ -105,18 +106,18 @@ function Home({ searchTerm = "" }) {
                     }}
                   />
                   <div className="card-body text-center d-flex flex-column">
-                    <h5 className="card-title fw-bold">{movie.title}</h5>
+                    <h5 className="card-title fw-bold text-dark">{movie.title}</h5>
                     <div className="mb-2">
                       {movie.genre && (
-                        <span className="badge bg-secondary me-1">{movie.genre}</span>
+                        <span className="badge bg-dark me-1">{movie.genre}</span>
                       )}
                       {movie.languages?.slice(0, 2).map((lang, i) => (
-                        <span key={i} className="badge bg-info text-dark me-1">
+                        <span key={i} className="badge bg-secondary text-light me-1">
                           {lang}
                         </span>
                       ))}
                     </div>
-                    <p className="text-muted small mt-auto">
+                    <p className="text-muted small mt-auto mb-0">
                       🕐 {movie.duration || "N/A"} min
                     </p>
                   </div>
